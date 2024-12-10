@@ -12,18 +12,10 @@ const Points = () => {
   return (
     <group>
       {points.map((point, index) => (
-        <Point
-          key={index}
-          latLon={point.coordinate}
-          rad={3}
-          ref={pointRefs[index]}
-          fullModelScale={point.fullModelScale}
-        >
-          <Model
-            rad={point.modelRad}
-            modelName={point.modelName}
-            ref={modelRefs[index]}
-          />
+        <Point key={index} rad={3} ref={pointRefs[index]} {...point}>
+          <group>
+            <Model ref={modelRefs[index]} />
+          </group>
         </Point>
       ))}
     </group>

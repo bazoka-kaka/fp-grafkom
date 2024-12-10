@@ -7,8 +7,14 @@ import useMainStore from '../../../../store/useMainStore'
 import gsap from 'gsap'
 import { PointContext } from "./Point";
 
-const Model = React.forwardRef(({ modelName, rad }, ref) => {
-  const { setModelRef, position, rotation } = React.useContext(PointContext);
+const Model = React.forwardRef((_, ref) => {
+  const {
+    setModelRef,
+    position,
+    rotation,
+    modelName,
+    modelRad: rad,
+  } = React.useContext(PointContext);
 
   const setFocusTarget = useMainStore.useSetFocusTarget();
 
