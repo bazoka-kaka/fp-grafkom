@@ -7,14 +7,9 @@ import useMainStore from '../../../../store/useMainStore'
 import gsap from 'gsap'
 import { PointContext } from "./Point";
 
-const Model = () => {
-  const {
-    carouselRef,
-    modelRef: ref,
-    modelName,
-    altitude,
-    fullModelScale,
-  } = React.useContext(PointContext);
+const Model = React.forwardRef((_, ref) => {
+  const { carouselRef, modelName, altitude, fullModelScale } =
+    React.useContext(PointContext);
 
   const scale = Array(3).fill(fullModelScale);
 
@@ -28,14 +23,15 @@ const Model = () => {
   };
 
   return (
-    <primitive
-      ref={ref}
-      object={gltf.scene}
-      position={[0, altitude, 0]}
-      scale={scale}
-      onClick={onModelClick}
-    />
+    <group ref={ref}>
+      <primitive
+        object={gltf.scene}
+        position={[0, altitude, 0]}
+        scale={scale}
+        onClick={onModelClick}
+      />
+    </group>
   );
-};
+});
 
 export default Model
