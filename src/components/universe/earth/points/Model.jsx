@@ -7,9 +7,9 @@ import useMainStore from '../../../../store/useMainStore'
 import gsap from 'gsap'
 import { PointContext } from "./Point";
 
-const Model = React.forwardRef((_, ref) => {
+const Model = () => {
   const {
-    setModelRef,
+    modelRef: ref,
     position,
     rotation,
     modelName,
@@ -30,7 +30,6 @@ const Model = React.forwardRef((_, ref) => {
   React.useEffect(() => {
     if (ref.current !== null) {
       ref.current.rotation.set(...rotation, "YXZ");
-      setModelRef(ref);
     }
   }, [ref.current]);
 
@@ -43,6 +42,6 @@ const Model = React.forwardRef((_, ref) => {
       onClick={onModelClick}
     />
   );
-});
+};
 
 export default Model
