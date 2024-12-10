@@ -9,36 +9,30 @@ import { PointContext } from "./Point";
 
 const Model = () => {
   const {
+    carouselRef,
     modelRef: ref,
-    position,
-    rotation,
     modelName,
-    modelRad: rad,
+    altitude,
+    fullModelScale,
   } = React.useContext(PointContext);
+
+  const scale = Array(3).fill(fullModelScale);
 
   const setFocusTarget = useMainStore.useSetFocusTarget();
 
   const gltf = useLoader(GLTFLoader, `/models/${modelName}`);
 
-  const fixPosition = position.map((e) => e * rad);
-
   const onModelClick = () => {
     setFocusTarget(null);
-    gsap.to(ref.current.scale, { duration: 0.2, x: 0, y: 0, z: 0 });
+    gsap.to(carouselRef.current.scale, { duration: 0.2, x: 0, y: 0, z: 0 });
   };
-
-  React.useEffect(() => {
-    if (ref.current !== null) {
-      ref.current.rotation.set(...rotation, "YXZ");
-    }
-  }, [ref.current]);
 
   return (
     <primitive
       ref={ref}
       object={gltf.scene}
-      position={fixPosition}
-      scale={[0, 0, 0]}
+      position={[0, altitude, 0]}
+      scale={scale}
       onClick={onModelClick}
     />
   );
