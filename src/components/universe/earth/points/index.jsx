@@ -9,12 +9,16 @@ const Points = () => {
   return (
     <group>
       {points.map((point, index) => (
-        <Point key={index} rad={3} {...point}>
-          <Carousel />
-        </Point>
+          <Point
+            key={index}
+            rad={3}
+            {...point}
+          >
+            <Carousel/>
+          </Point>
       ))}
     </group>
-  );
-};
+  )
+}
 
 export default Points

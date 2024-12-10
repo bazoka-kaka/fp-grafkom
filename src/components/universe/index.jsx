@@ -37,7 +37,9 @@ const Universe = () => {
 
         gsap.timeline({paused: false})
           .to(camera.position, {duration: .5, y: 3})
-          .to(controls.current, {duration: .5, minDistance: 0.35, maxDistance: 0.35, maxPolarAngle: Math.PI/2, autoRotate: true})
+          .to(controls.current, {duration: .5, minDistance: 0.35, maxDistance: 0.35, maxPolarAngle: Math.PI/2,
+            // autoRotate: true
+          })
         //#endregion  //*======== Animate Zoom In To Focused Object ===========
       } else {
 
@@ -45,7 +47,9 @@ const Universe = () => {
         gsap.to(groupRef.current.rotation, {duration: 2, x: 0, y: 0, z: 0, order: 'ZXY'})
         gsap.to(controls.current.target, {duration: 2, x: 0, y: 0, z: 0})
         gsap.timeline({paused: false})
-          .to(controls.current, {duration:.5, minDistance: 3.1, maxDistance: 8, maxPolarAngle: Math.PI, autoRotate: false})
+          .to(controls.current, {duration:.5, minDistance: 3.1, maxDistance: 8, maxPolarAngle: Math.PI,
+            // autoRotate: false
+          })
           .to(camera.position, {duration: 2, x: 0, y: 0, z: 5})
         //#endregion  //*======== Animate Zoom Out Back To Earth ===========
       }
