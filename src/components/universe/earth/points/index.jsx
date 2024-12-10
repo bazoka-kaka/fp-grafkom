@@ -12,27 +12,22 @@ const Points = () => {
   return (
     <group>
       {points.map((point, index) => (
-          <Point
-            key={index}
-            latLon={point.coordinate}
-            rad={3}
-            ref={pointRefs[index]}
-            fullModelScale={point.fullModelScale}>
-            {({setModelRef, position, rotation}) => {
-              return (
-                <Model
-                  setModelRef={setModelRef}
-                  position={position}
-                  rotation={rotation}
-                  rad={point.modelRad}
-                  modelName={point.modelName}
-                  ref={modelRefs[index]} />
-              )
-            }}
-          </Point>
+        <Point
+          key={index}
+          latLon={point.coordinate}
+          rad={3}
+          ref={pointRefs[index]}
+          fullModelScale={point.fullModelScale}
+        >
+          <Model
+            rad={point.modelRad}
+            modelName={point.modelName}
+            ref={modelRefs[index]}
+          />
+        </Point>
       ))}
     </group>
-  )
+  );
 }
 
 export default Points

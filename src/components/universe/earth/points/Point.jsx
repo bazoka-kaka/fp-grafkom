@@ -5,6 +5,7 @@ import gsap from 'gsap'
 import { latLonTo3dPosition, latLonTo3dRotation } from '../../../../lib'
 import useMainStore from '../../../../store/useMainStore'
 
+export const PointContext = React.createContext();
 const Point = forwardRef(({ latLon: [lat, lon], rad, children, fullModelScale }, ref) => {
   const setFocusTarget = useMainStore.useSetFocusTarget()
 
@@ -26,20 +27,14 @@ const Point = forwardRef(({ latLon: [lat, lon], rad, children, fullModelScale },
   }
 
   return (
-    <>
-      <mesh ref={ref} position={pointPosition}
-            onClick={onClick}
-      >
-        <cylinderGeometry
-          args={[.03, .03, .01, 20]}
-        />
-        <meshStandardMaterial
-          color='#FFFFFF'
-        />
+    <PointContext.Provider value={{ setModelRef, position, rotation }}>
+      <mesh ref={ref} position={pointPosition} onClick={onClick}>
+        <cylinderGeometry args={[0.03, 0.03, 0.01, 20]} />
+        <meshStandardMaterial color="#FFFFFF" />
       </mesh>
-      { children({ setModelRef, position, rotation }) }
-    </>
-  )
+      {children}
+    </PointContext.Provider>
+  );
 })
 
 export default Point
