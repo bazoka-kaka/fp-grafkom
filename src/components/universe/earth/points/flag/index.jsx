@@ -2,6 +2,7 @@ import React from "react";
 import * as THREE from 'three';
 import {useLoader} from "@react-three/fiber";
 import {PointContext} from "../Point";
+import FlagCloth from "./FlagCloth";
 
 const Flag = React.forwardRef((_, ref) => {
   const {countryCode} = React.useContext(PointContext)
@@ -12,10 +13,7 @@ const Flag = React.forwardRef((_, ref) => {
         <cylinderGeometry args={[.005, .005, .5, 20]}/>
         <meshStandardMaterial color='#FFFFFF'/>
       </mesh>
-      <mesh position={[0.075,0.2125,0]}>
-        <planeGeometry args={[.15,.075]}/>
-        <meshStandardMaterial color='#FFFFFF' side={THREE.DoubleSide} map={map}/>
-      </mesh>
+      <FlagCloth map={map} />
     </group>
   )
 })

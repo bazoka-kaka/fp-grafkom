@@ -1,3 +1,5 @@
+import * as THREE from 'three'
+
 // Conversion utilities between degree and radian
 export const degToRad = deg => deg * Math.PI / 180
 export const radToDeg = rad => rad * 180 / Math.PI
@@ -27,3 +29,26 @@ export const latLonTo3dPosition = (lat, lon, radius = 1) => [
 ]
 
 export const latLonTo3dRotation = (lat, lon) => [Math.PI / 2 - degToRad(lat),degToRad(lon), degToRad(0)]
+
+export const arrayToMatrix = (array, nColumn) => {
+  const matrix = []
+  while (array.length) matrix.push(array.splice(0, nColumn))
+
+  return matrix
+}
+
+export const computeFaceNormal = position => {
+  let tri = new THREE.Triangle();
+  let a = new THREE.Vector3(),
+    b = new THREE.Vector3(),
+    c = new THREE.Vector3();
+  const output = new THREE.Vector3()
+
+  a.fromArray(position[0])
+  b.fromArray(position[1])
+  c.fromArray(position[2])
+  tri.set(a, b, c)
+  tri.getNormal(output)
+
+  return output
+}
