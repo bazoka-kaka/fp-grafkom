@@ -1,6 +1,7 @@
-import React from 'react'
-import { useFrame, useLoader } from '@react-three/fiber'
+import React, {useRef} from 'react'
+import { useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
+import gsap from 'gsap'
 
 
 import EarthCityLight from './EarthCityLight'
@@ -13,21 +14,27 @@ const Earth = () => {
   //#endregion  //*======== Set Material Configuration ===========
 
   //#region  //*=========== Set Geometry Configuration ===========
-  const [rotation, setRotation] = React.useState([0, 0, 0])
   const radius = 3
   const widthSegments = 64
   const heightSegments = 64
   const phiStart = -0.5 * Math.PI
   //#endregion  //*======== Set Geometry Configuration ===========
 
-  useFrame(() => {
-    const degree = getDegreeDistance()
+  const ref = useRef()
 
-    setRotation([0, degToRad(degree), 0])
-  })
+  React.useEffect(() => {
+    if (ref.current) {
+      //#region  //*=========== Update Earth Rotation Every Minute ===========
+      gsap.to(ref.current.rotation, {duration: .1, y: degToRad(getDegreeDistance())})
+      setInterval(() => {
+        gsap.to(ref.current.rotation, {duration: .1, y: degToRad(getDegreeDistance())})
+      }, 60 * 1000)
+      //#endregion  //*======== Update Earth Rotation Every Minute ===========
+    }
+  }, [ref.current])
   
   return (
-    <group rotation={rotation}>
+    <group ref={ref}>
       <mesh position={[0,0,0]}>
         <sphereGeometry args={[radius, widthSegments, heightSegments, phiStart]}/>
         <meshStandardMaterial
