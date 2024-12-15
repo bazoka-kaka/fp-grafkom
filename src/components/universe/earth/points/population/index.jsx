@@ -21,7 +21,7 @@ const Population = forwardRef((_, ref) => {
     const fetchPopulationData = async () => {
       try {
         const response = await fetch(
-          `https://api.worldbank.org/v2/country/${countryCode}/indicator/SP.POP.TOTL?date=2017:2021&format=json`
+          `https://api.worldbank.org/v2/country/${countryCode}/indicator/SP.POP.TOTL?date=2019:2024&format=json`
         ); // Fetch data populasi berdasarkan `countryCode`
         const jsonData = await response.json();
 
@@ -29,7 +29,7 @@ const Population = forwardRef((_, ref) => {
           const filteredData = jsonData[1]
             .filter(
               (entry) =>
-                parseInt(entry.date) >= 2017 && parseInt(entry.date) <= 2021
+                parseInt(entry.date) >= 2019 && parseInt(entry.date) <= 2024
             )
             .map((entry) => ({
               year: entry.date,
@@ -90,7 +90,7 @@ const Population = forwardRef((_, ref) => {
         anchorX="center"
         anchorY="middle"
       >
-        2017 - 2021 by World Bank
+        2019 - 2023 by World Bank
       </Text>
       {/* Bar Grafik */}
       {data.map((e) => (
