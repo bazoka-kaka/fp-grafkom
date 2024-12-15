@@ -36,7 +36,7 @@ const Point = ({ coordinate: [lat, lon], rad, children, ...rest }) => {
         <cylinderGeometry
           args={[.03, .03, .01, 20]}
         />
-        <meshStandardMaterial
+        <meshBasicMaterial
           color='#FFFFFF'
         />
       </mesh>

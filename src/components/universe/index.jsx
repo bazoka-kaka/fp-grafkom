@@ -6,6 +6,7 @@ import gsap from 'gsap'
 import Background from './Background'
 import Earth from './earth'
 import Sun from './sun'
+import Moon from './moon'
 import { ControlsContext } from '../../App'
 import { degToRad, getDegreeDistance } from '../../lib'
 import useMainStore from '../../store/useMainStore'
@@ -61,6 +62,7 @@ const Universe = () => {
       <Background />
       <Sun />
       <Earth />
+      <Moon />
     </group>
   )
 }
