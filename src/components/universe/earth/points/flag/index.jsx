@@ -5,8 +5,8 @@ import {PointContext} from "../Point";
 import FlagCloth from "./FlagCloth";
 
 const Flag = React.forwardRef((_, ref) => {
-  const {countryCode} = React.useContext(PointContext)
-  const map = useLoader(THREE.TextureLoader, `https://flagcdn.com/w320/${countryCode}.png`)
+  const {code} = React.useContext(PointContext)
+  const map = useLoader(THREE.TextureLoader, `https://flagcdn.com/w320/${code}.png`)
   return (
     <group ref={ref}>
       <mesh>

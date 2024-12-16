@@ -4,23 +4,31 @@ import gsap from 'gsap'
 
 import { latLonTo3dPosition, latLonTo3dRotation } from '../../../../lib'
 import useMainStore from '../../../../store/useMainStore'
+import {getCentralPoint} from "../../../../lib/api";
 
 export const PointContext = React.createContext()
-const Point = ({ coordinate: [lat, lon], rad, children, isFocus, focusFn, removeFocus, ...rest }) => {
+const Point = ({ code, coordinate, rad = 3, children, isFocus, focusFn, removeFocus, ...rest }) => {
   const setFocusTarget = useMainStore.useSetFocusTarget()
-
+  const [pointPosition, setPointPosition] = React.useState([0,0,0])
+  const [rotation, setRotation] = React.useState([0,0,0])
   const ref = React.useRef()
   const carouselRef = React.useRef()
 
-  const position = latLonTo3dPosition(lat, lon)
-  const pointPosition = position.map(e => e * rad)
-  const rotation = latLonTo3dRotation(lat, lon)
+  const setupData = async () => {
+    const centralPoint = (await getCentralPoint(code)).reverse()
+    setPointPosition(latLonTo3dPosition(...centralPoint, rad))
+    setRotation(latLonTo3dRotation(...centralPoint))
+  }
+
+  React.useEffect(() => {
+    setupData()
+  }, [])
 
   React.useEffect(() => {
     if (ref.current) {
       ref.current.rotation.set(...rotation,'YXZ')
     }
-  }, [ref.current])
+  }, [ref.current, rotation])
 
   const onClick = () => {
     focusFn()
@@ -30,7 +38,7 @@ const Point = ({ coordinate: [lat, lon], rad, children, isFocus, focusFn, remove
 
   return (
     <PointContext.Provider value={{
-      carouselRef, position, rotation, isFocus, removeFocus, ...rest}}>
+      code, carouselRef, position: pointPosition, rotation, isFocus, removeFocus, ...rest}}>
       <mesh ref={ref} position={pointPosition}
             onClick={onClick}
       >

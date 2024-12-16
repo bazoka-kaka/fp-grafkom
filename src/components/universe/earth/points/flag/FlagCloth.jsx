@@ -41,7 +41,7 @@ const FlagCloth = ({map}) => {
   });
 
   return (
-    <group position={[-0.08,0.19,0]}>
+    <group position={[0.08,0.19,0]}>
       {cloth && <mesh ref={mesh} scale={[.0005,.0005,.0005]}>
         <parametricGeometry
           attach='geometry'
@@ -54,14 +54,6 @@ const FlagCloth = ({map}) => {
           map={map}
         />
       </mesh>}
-      {cloth &&
-        cloth.particles.map((p, i) => (
-          <mesh key={i} position={p.position}>
-            <boxBufferGeometry attach="geometry" args={Array(3).fill(0.05)} />
-            <meshStandardMaterial attach="material" color={'orange'} side={THREE.DoubleSide}/>
-          </mesh>
-        ))
-      }
     </group>
   )
 }
