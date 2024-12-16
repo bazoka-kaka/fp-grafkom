@@ -36,7 +36,7 @@ const ControlContainer = ({ children }) => {
 const App = () => {
   return (
     <div className={styles.container}>
-      <Canvas className={styles.container} onCreated={state => {state.gl.localClippingEnabled = true}}>
+      <Canvas className={styles.container} onCreated={state => {state.gl.localClippingEnabled = true}} shadows={true}>
         <ambientLight intensity={.05} />
         <ControlContainer>
           <Universe />

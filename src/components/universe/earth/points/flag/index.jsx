@@ -9,7 +9,7 @@ const Flag = React.forwardRef((_, ref) => {
   const map = useLoader(THREE.TextureLoader, `https://flagcdn.com/w320/${code}.png`)
   return (
     <group ref={ref}>
-      <mesh>
+      <mesh castShadow>
         <cylinderGeometry args={[.005, .005, .5, 20]}/>
         <meshStandardMaterial color='#FFFFFF'/>
       </mesh>

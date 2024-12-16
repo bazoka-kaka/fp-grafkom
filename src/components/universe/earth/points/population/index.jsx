@@ -48,10 +48,10 @@ const Population = forwardRef((_, ref) => {
   return (
     <group ref={ref}>
       <group position={[-.15, .375, 0]}>
-        <mesh>
+        <mesh castShadow>
           <textGeometry args={[`Population growth`, {font, size: .025, height: .002}]}/>
         </mesh>
-        <mesh position={[.06,-.025,0]}>
+        <mesh castShadow position={[.06,-.025,0]}>
           <textGeometry args={[`2017 - 2021 by World Bank`, {font, size: .01, height: .002}]}/>
         </mesh>
       </group>
