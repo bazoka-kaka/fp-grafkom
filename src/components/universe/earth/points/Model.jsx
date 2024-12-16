@@ -9,7 +9,7 @@ import {PointContext} from "./Point";
 
 const Model = React.forwardRef((_, ref) => {
 
-  const {carouselRef, modelName, altitude, fullModelScale} = React.useContext(PointContext)
+  const {carouselRef, modelName, altitude, fullModelScale, removeFocus} = React.useContext(PointContext)
 
   const scale = Array(3).fill(fullModelScale)
 
@@ -18,6 +18,7 @@ const Model = React.forwardRef((_, ref) => {
   const gltf = useLoader(GLTFLoader, `/models/${modelName}`)
 
   const onModelClick = () => {
+    removeFocus()
     setFocusTarget(null)
     gsap.to(carouselRef.current.scale, {duration: .2, x: 0, y: 0, z: 0})
   }
