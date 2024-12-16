@@ -11,6 +11,7 @@ import Points from './points'
 const Earth = () => {
   //#region  //*=========== Set Material Configuration ===========
   const map = useLoader(THREE.TextureLoader, 'textures/earth_no_ice_clouds_mts_8k.jpg')
+  const specularMap = useLoader(THREE.TextureLoader, 'textures/water_8k.png')
   //#endregion  //*======== Set Material Configuration ===========
 
   //#region  //*=========== Set Geometry Configuration ===========
@@ -37,7 +38,7 @@ const Earth = () => {
     <group ref={ref}>
       <mesh position={[0,0,0]} receiveShadow castShadow>
         <sphereGeometry args={[radius, widthSegments, heightSegments, phiStart]}/>
-        <meshStandardMaterial map={map} />
+        <meshPhongMaterial map={map} specularMap={specularMap}/>
       </mesh>
       <EarthCityLight/>
       <Points />
