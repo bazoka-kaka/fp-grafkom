@@ -8,14 +8,14 @@ const Points = () => {
   const [focusedIndex, setFocusedIndex] = React.useState(null)
   return (
     <group>
-      {points.map((point, index) => (
+      {Object.keys(points).map((code, index) => (
           <Point
-            key={index}
-            rad={3}
+            key={code}
+            code={code}
             focusFn={() => setFocusedIndex(index)}
             removeFocus={() => setFocusedIndex(null)}
             isFocus={focusedIndex === index}
-            {...point}
+            {...points[code]}
           >
             <Carousel/>
           </Point>
