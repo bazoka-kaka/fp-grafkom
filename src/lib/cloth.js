@@ -110,13 +110,8 @@ class Cloth {
       const faces = arrayToMatrix([...geometry.index.array], 3)
       const positions = arrayToMatrix([...geometry.attributes.position.array], 3)
       faces.forEach((face) => {
-        // console.log('============================================')
-        // console.log(positions)
         const position = face.map(idx => positions[idx])
-        // console.log(position)
         const faceNormal = computeFaceNormal(position)
-          // .normalize()
-        console.log(faceNormal)
         this.tmpForce
           .copy(faceNormal)
           .normalize()
@@ -149,21 +144,10 @@ class Cloth {
       this.diff.subVectors(p2.position, p1.position);
 
       const currentDist = this.diff.length();
-      // console.log('==============================')
-      // console.log(currentDist)
-      // console.log(1 - distance / currentDist)
-      // console.log('==============================')
       if (currentDist === 0) return;
 
-      console.log('==============================')
-      console.log(this.diff)
       const correction = this.diff.multiplyScalar(1 - distance / currentDist);
-      console.log(this.diff)
-      console.log(correction)
       const correctionHalf = correction.multiplyScalar(0.5);
-      console.log(correction)
-      console.log(correctionHalf)
-      console.log('==============================')
       p1.position.add(correctionHalf);
       p2.position.sub(correctionHalf);
     });
