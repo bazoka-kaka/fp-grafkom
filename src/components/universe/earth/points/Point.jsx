@@ -6,7 +6,7 @@ import { latLonTo3dPosition, latLonTo3dRotation } from '../../../../lib'
 import useMainStore from '../../../../store/useMainStore'
 
 export const PointContext = React.createContext()
-const Point = ({ coordinate: [lat, lon], rad, children, ...rest }) => {
+const Point = ({ coordinate: [lat, lon], rad, children, isFocus, focusFn, removeFocus, ...rest }) => {
   const setFocusTarget = useMainStore.useSetFocusTarget()
 
   const ref = React.useRef()
@@ -23,20 +23,21 @@ const Point = ({ coordinate: [lat, lon], rad, children, ...rest }) => {
   }, [ref.current])
 
   const onClick = () => {
+    focusFn()
     setFocusTarget(carouselRef.current)
     gsap.to(carouselRef.current.scale, {duration: .2, x: 1, y: 1, z: 1})
   }
 
   return (
     <PointContext.Provider value={{
-      carouselRef, position, rotation, ...rest}}>
+      carouselRef, position, rotation, isFocus, removeFocus, ...rest}}>
       <mesh ref={ref} position={pointPosition}
             onClick={onClick}
       >
         <cylinderGeometry
           args={[.03, .03, .01, 20]}
         />
-        <meshBasicMaterial
+        <meshStandardMaterial
           color='#FFFFFF'
         />
       </mesh>
