@@ -52,7 +52,7 @@ class Cloth {
         );
         const particle = new Particle(position);
         particle.setMass(this.mass);
-        particle.setPinned(u === this.xSegments);
+        particle.setPinned(u === 0);
         this.particles.push(particle);
       }
     }
