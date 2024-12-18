@@ -1,42 +1,58 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 import { useFrame, useLoader } from "@react-three/fiber";
-import { normalize } from "../../../lib";
 
-const Moon = ({ earthPosition = [0, 0, 0], orbitRadius = 15 }) => {
+const Moon = () => {
   const ref = useRef();
-
-  // Load the moon texture
+  const [incrementX, setIncrementX] = useState(true);
+  const [rotation, setRotation] = useState([0, 0, 0]);
   const moonMap = useLoader(TextureLoader, "textures/moon.jpg");
 
-  // Moon properties (realistic size relative to Earth)
-  const radius = 1; // Moon radius relative to Earth
-  const widthSegments = 32;
-  const heightSegments = 32;
+  const moonRevolutionDuration = 27.3 * 24 * 60 * 60; // days * hours * minutes * seconds
+  const xRevolutionRatio = 0.3;
+  const yRevolutionRatio = 6.5;
+  const zRotationRatio = 6.25 / 24 / 60 / 60; // ratio / hours / minutes / seconds
 
-  // Moon revolution duration in seconds
-  const moonRevolutionDuration = 27.3 * 24 * 60 * 60; // 27.3 days in seconds
+  const position = [0, 0, -10];
+  const radius = 0.75;
+  const widthSegments = 64;
+  const heightSegments = 64;
 
-  // Frame-by-frame updates
-  useFrame(({ clock }) => {
-    const elapsedTime = clock.getElapsedTime();
+  useEffect(() => {
+    const currDate = new Date().getDate();
 
-    // Calculate moon's position based on revolution
-    const angle = Math.PI / 2 + (elapsedTime / moonRevolutionDuration) * 2 * Math.PI;
-    const moonX = earthPosition[0] + orbitRadius * Math.cos(angle);
-    const moonZ = earthPosition[2] + orbitRadius * Math.sin(angle);
-
-    if (ref.current) {
-      ref.current.position.set(moonX, earthPosition[1], moonZ); // Update moon position
-      ref.current.rotation.y += 0.01; // Add rotation to moon
+    // current X & Y ratio
+    let normalizedX = null;
+    let normalizedY = null;
+    if (currDate <= 15) {
+      normalizedX = ((currDate - 1) / (15 - 1) - 1) * xRevolutionRatio * -1;
+      normalizedY =
+        ((currDate - 1) / (15 - 1) - 1) * (yRevolutionRatio / 2) * -1;
+    } else {
+      normalizedX = ((currDate - 15) / (31 - 15)) * xRevolutionRatio;
+      normalizedY = ((currDate - 15) / (31 - 15)) * (yRevolutionRatio / 2);
     }
+
+    setRotation([normalizedX, normalizedY, 0]);
+  }, []);
+
+  useFrame(() => {
+    if (ref.current.rotation.x >= Math.abs(xRevolutionRatio))
+      setIncrementX(!incrementX);
+
+    incrementX
+      ? (ref.current.rotation.x += xRevolutionRatio / moonRevolutionDuration)
+      : (ref.current.rotation.x -= xRevolutionRatio / moonRevolutionDuration);
+
+    ref.current.rotation.y += yRevolutionRatio / moonRevolutionDuration;
+    ref.current.rotation.z += zRotationRatio;
   });
 
   return (
-    <group ref={ref}>
-      <mesh>
+    <group ref={ref} rotation={rotation}>
+      <mesh position={position}>
         <sphereGeometry args={[radius, widthSegments, heightSegments]} />
-        <meshStandardMaterial map={moonMap} />
+        <meshPhongMaterial map={moonMap} />
       </mesh>
     </group>
   );

@@ -7,12 +7,15 @@ import {PointContext} from "./Point";
 import Flag from "./flag";
 import Navigation from "./navigation";
 import Population from "./population";
+import {getDegreeDistance, radToDeg} from "../../../../lib";
 
 export const CarouselContext = React.createContext()
 const Carousel = () => {
 
-  const {carouselRef: ref, position, rotation, isFocus} = React.useContext(PointContext)
-  const fixedPosition = position.map(e => e * 3)
+  const {carouselRef: ref, ref: pointRef, position, rotation, isFocus} = React.useContext(PointContext)
+
+  const longPosition = radToDeg(rotation[1]) + getDegreeDistance()
+  const isUsingSpotlight = longPosition < 90 || longPosition > 270
 
   const objects = [
     {
@@ -42,7 +45,8 @@ const Carousel = () => {
 
   return (
     <CarouselContext.Provider value={{len: objects.length, setShownObject}}>
-      <group ref={ref} position={fixedPosition} rotation={[...rotation, 'YXZ']} scale={Array(3).fill(0)} visible={isFocus}>
+      <group ref={ref} position={position} rotation={[...rotation, 'YXZ']} scale={Array(3).fill(0)} visible={isFocus}>
+        <spotLight castShadow position={[0, 4, 2]} angle={Math.PI/32} penumbra={1} visible={isUsingSpotlight} target={pointRef.current}/>
         <Navigation />
         {objects.map(Object => (
           <Object.component ref={Object.ref}/>

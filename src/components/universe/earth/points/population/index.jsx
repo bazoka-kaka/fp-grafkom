@@ -1,11 +1,14 @@
 import React, {forwardRef} from "react";
 import * as THREE from 'three'
+import {FontLoader} from "three/examples/jsm/loaders/FontLoader";
+import inter from "../../../../../assets/fonts/Inter_Regular.json";
 
 import Bar from "./Bar";
 import {PointContext} from "../Point";
 
 const Population = forwardRef((_, ref) => {
   const {code} = React.useContext(PointContext)
+  const font = new FontLoader().parse(inter)
 
   const width = 0.05
   const max_height = 0.5
@@ -44,7 +47,14 @@ const Population = forwardRef((_, ref) => {
 
   return (
     <group ref={ref}>
-
+      <group position={[-.15, .375, 0]}>
+        <mesh castShadow>
+          <textGeometry args={[`Population growth`, {font, size: .025, height: .002}]}/>
+        </mesh>
+        <mesh castShadow position={[.06,-.025,0]}>
+          <textGeometry args={[`2017 - 2021 by World Bank`, {font, size: .01, height: .002}]}/>
+        </mesh>
+      </group>
       {data.map(e => (
         <Bar year={e.year} pop={e.pop} height={e.height} x={e.x} color={e.color}/>
       ))}

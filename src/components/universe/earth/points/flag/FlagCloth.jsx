@@ -42,7 +42,7 @@ const FlagCloth = ({map}) => {
 
   return (
     <group position={[0.08,0.19,0]}>
-      {cloth && <mesh ref={mesh} scale={[.0005,.0005,.0005]}>
+      {cloth && <mesh castShadow ref={mesh} scale={[.0005,.0005,.0005]}>
         <parametricGeometry
           attach='geometry'
           args={cloth.toGeometryArgs()}

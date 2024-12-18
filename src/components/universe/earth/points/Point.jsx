@@ -38,7 +38,7 @@ const Point = ({ code, coordinate, rad = 3, children, isFocus, focusFn, removeFo
 
   return (
     <PointContext.Provider value={{
-      code, carouselRef, position: pointPosition, rotation, isFocus, removeFocus, ...rest}}>
+      ref, code, carouselRef, position: pointPosition, rotation, isFocus, removeFocus, ...rest}}>
       <mesh ref={ref} position={pointPosition}
             onClick={onClick}
       >

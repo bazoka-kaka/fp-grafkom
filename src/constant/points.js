@@ -158,5 +158,17 @@ export default {
       fullScale: .02,
       altitude: 0
     }
+  },
+  tw: {
+    model: {
+      fullScale: .02,
+      altitude: 0
+    }
+  },
+  cn: {
+    model: {
+      fullScale: .02,
+      altitude: 0
+    }
   }
 }
