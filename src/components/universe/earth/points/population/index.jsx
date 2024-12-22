@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import {FontLoader} from "three/examples/jsm/loaders/FontLoader";
 import inter from "../../../../../assets/fonts/Inter_Regular.json";
 
-import Bar from "./Bar";
+import Bar from "./bar.jsx"; // /Bar -> /bar.jsx
 import {PointContext} from "../Point";
 
 const Population = forwardRef((_, ref) => {
