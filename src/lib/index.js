@@ -52,3 +52,5 @@ export const computeFaceNormal = position => {
 
   return output
 }
+
+export const normalize = (val, max, min) => (val - min) / (max - min)

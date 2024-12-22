@@ -11,8 +11,11 @@ const Point = ({ code, coordinate, rad = 3, children, isFocus, focusFn, removeFo
   const setFocusTarget = useMainStore.useSetFocusTarget()
   const [pointPosition, setPointPosition] = React.useState([0,0,0])
   const [rotation, setRotation] = React.useState([0,0,0])
+  // const [active, setActive] = useState(false)
   const ref = React.useRef()
   const carouselRef = React.useRef()
+  const [hover, setHover] = React.useState(false)
+  // let hoverState = false
 
   const setupData = async () => {
     const centralPoint = (await getCentralPoint(code)).reverse()
@@ -30,10 +33,29 @@ const Point = ({ code, coordinate, rad = 3, children, isFocus, focusFn, removeFo
     }
   }, [ref.current, rotation])
 
+  
+
   const onClick = () => {
     focusFn()
     setFocusTarget(carouselRef.current)
     gsap.to(carouselRef.current.scale, {duration: .2, x: 1, y: 1, z: 1})
+    // alert('onClickStatus is ' + onClickStatus) // Status is false
+    // onClickStatus = !onClickStatus
+    // alert('onClickStatus is ' + onClickStatus) // Status is true
+    // if (onClickStatus) {alert('onClickStatus is ' + onClickStatus)}
+    alert('isFocus : ' + isFocus)
+  }
+
+  const onHoverIn = () => {
+    // hoverState = !hoverState
+    setHover(true)
+    // console.log('hovered in ' + hoverState)
+  }
+
+  const onHoverOut = () => {
+    // hoverState = !hoverState
+    setHover(false)
+    // console.log('hovered out ' + hoverState)
   }
 
   return (
@@ -41,12 +63,18 @@ const Point = ({ code, coordinate, rad = 3, children, isFocus, focusFn, removeFo
       ref, code, carouselRef, position: pointPosition, rotation, isFocus, removeFocus, ...rest}}>
       <mesh ref={ref} position={pointPosition}
             onClick={onClick}
+            onPointerOver={onHoverIn}
+            onPointerOut={onHoverOut}
       >
         <cylinderGeometry
           args={[.03, .03, .01, 20]}
         />
         <meshBasicMaterial
-          color='#FFFFFF'
+          color={hover === true ? '#FF0000' : '#FFFFFF'}
+          // opacity='0.0'
+          // transparent={isFocus === true ? true : false}
+          visible = {!isFocus}
+
         />
       </mesh>
       { children }
