@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 import { useFrame, useLoader } from "@react-three/fiber";
+import { normalize } from "lib";
 
 const Moon = () => {
   const ref = useRef();
@@ -25,12 +26,12 @@ const Moon = () => {
     let normalizedX = null;
     let normalizedY = null;
     if (currDate <= 15) {
-      normalizedX = ((currDate - 1) / (15 - 1) - 1) * xRevolutionRatio * -1;
+      normalizedX = (normalize(currDate, 15, 1) - 1) * xRevolutionRatio * -1;
       normalizedY =
-        ((currDate - 1) / (15 - 1) - 1) * (yRevolutionRatio / 2) * -1;
+        (normalize(currDate, 15, 1) - 1) * (yRevolutionRatio / 2) * -1;
     } else {
-      normalizedX = ((currDate - 15) / (31 - 15)) * xRevolutionRatio;
-      normalizedY = ((currDate - 15) / (31 - 15)) * (yRevolutionRatio / 2);
+      normalizedX = (normalize(currDate, 31, 15)) * xRevolutionRatio;
+      normalizedY = (normalize(currDate, 31, 15)) * (yRevolutionRatio / 2);
     }
 
     setRotation([normalizedX, normalizedY, 0]);
