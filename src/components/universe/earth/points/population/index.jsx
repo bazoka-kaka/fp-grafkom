@@ -30,7 +30,7 @@ const Population = forwardRef((_, ref) => {
   })
 
   const getData = async () => {
-    const res = await fetch(`https://api.worldbank.org/v2/country/${code}/indicator/SP.POP.TOTL?date=2017:2021&format=json`)
+    const res = await fetch(`https://api.worldbank.org/v2/country/${code}/indicator/SP.POP.TOTL?date=2019:2023&format=json`)
     const data = await res.json()
 
     const populations = data[1].map(e => ({
@@ -52,7 +52,7 @@ const Population = forwardRef((_, ref) => {
           <textGeometry args={[`Population growth`, {font, size: .025, height: .002}]}/>
         </mesh>
         <mesh castShadow position={[.06,-.025,0]}>
-          <textGeometry args={[`2017 - 2021 by World Bank`, {font, size: .01, height: .002}]}/>
+          <textGeometry args={[`2019 - 2023 by World Bank`, {font, size: .01, height: .002}]}/>
         </mesh>
       </group>
       {data.map(e => (
